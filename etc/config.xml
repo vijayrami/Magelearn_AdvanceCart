@@ -1,0 +1,16 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <advancecart_setting>
+            <minicart_settings>
+				<cart_text>Above $100 to qualify for free shipping!</cart_text>
+				<coupon>1</coupon>
+				<totals>1</totals>
+				<totals_title>Your Total:</totals_title>
+                <upsell_title>Don't forget.</upsell_title>
+				<upsell_type>1</upsell_type>
+				<upsell_limit>3</upsell_limit>
+				<upsell_view>2</upsell_view>
+            </minicart_settings>
+        </advancecart_setting>
+    </default>
+</config>

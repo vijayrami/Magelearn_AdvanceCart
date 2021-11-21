@@ -1,0 +1,86 @@
+<?php
+    $image = 'new_products_content_widget_grid';
+    $collection = $block->getProductCollection();
+    $items = $collection->getItems();
+
+    $showWishlist = true;
+    $showCompare = true;
+    $showCart = true;
+    $templateType = \Magento\Catalog\Block\Product\ReviewRendererInterface::DEFAULT_VIEW;
+    $description = false;
+?><?php if ($exist = ($collection && $collection->getSize())): ?>
+    <div class="dontForgetWrapper">
+        <p class="dontForget text-center">
+            <?php if ($block->getTitle()): ?>
+                <?= $block->escapeHtml(__($block->getTitle())) ?>
+            <?php endif ?>
+        </p>
+        
+        <div class="dontForgetCard d-flex">
+        <div class="block widget block-products-list">
+        <div class="block-content">
+            <div class="products-list custom-top-slider">
+                <ol class="product-items">
+                    <?php $iterator = 1; ?>
+                    <?php foreach ($items as $_item): ?>
+                        <?= /* @noEscape */
+                        ($iterator++ == 1) ? '<li class="product-item">' : '</li><li class="product-item">' ?>
+                        <div class="product-item-info">
+                            <a href="<?= $block->escapeUrl($block->getProductUrl($_item)) ?>" 
+                            class="product-item-photo dontForgetImg">
+                                <?= $block->getImage($_item, $image)->toHtml() ?>
+                            </a>
+                            <div class="product-item-details">
+                                 <div class="dontForgetInfoWrapper">
+                                    <a title="<?= $block->escapeHtml($_item->getName()) ?>"
+                                       href="<?= $block->escapeUrl($block->getProductUrl($_item)) ?>"
+                                       class="product-item-link">
+                                    <?php
+                                       $product_title = $_item->getName();
+                                       $product_type = $_item->getTypeId();
+                                       $product_description = $_item->getShortDescription();
+                                    if ($product_title) { ?>
+                                        <h3 class="productName"><?= /* @noEscape */ $product_title; ?></h3>
+                                        <?php } if ($product_type) { ?>
+                                        <h6 class="productCategory"><?= /* @noEscape */ $product_type; ?></h6>
+                                        <?php }if ($product_description) { ?>
+                                        <p class="productMisc"><?= /* @noEscape */ $product_description; ?></p>
+                                        <?php  } ?>
+                                    </a>
+                                </div>
+                                <?php
+                               
+                                if ($showWishlist || $showCompare || $showCart): ?>
+                                    <div class="product-item-actions productAddWrapper">
+                                        <?php if ($showCart): ?>
+                                            <div class="actions-primary addProduct d-flex">
+                                                <?php if ($_item->isSaleable()): ?>
+<form data-role="minicart-form" class="minicartForm" 
+action="<?= /* @noEscape */ $block->getAddToCartUrl($_item);?>" method="post">
+<input type="hidden" name="form_key" value="<?= /* @noEscape */ $block->getFormKey() ?>" />
+<p class="addProduct d-flex">ADD 
+<button class="addBtn action tocart primary upsellbutton"  type="submit">
+<span><?= $block->escapeHtml(__('+')) ?></span>
+</button>
+</p>
+</form>
+
+                                                <?php endif; ?>
+                                            </div>
+                                            
+                                        <?php endif;
+                                            $formattedPrice = $block->getFormattedCurrency($_item->getPrice()); ?>
+                                        <div class="upsell_price"><?= /* @noEscape */ $formattedPrice; ?></div>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                        <?= ($iterator == count($items) + 1) ? '</li>' : '' ?>
+                    <?php endforeach ?>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+    </diV>
+<?php endif;?>

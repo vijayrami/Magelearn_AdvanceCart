@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+   <system>
+      <tab id="advancecart" translate="label" sortOrder="10" class="advancecart-tab">
+         <label>Advance Cart</label>
+      </tab>
+      <section id="advancecart_setting" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+         <label>Settings</label>
+         <tab>advancecart</tab>
+         <resource>Magelearn_AdvanceCart::magelearn_advancecart</resource>
+         <group id="minicart_settings" translate="label"  sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+            <label>Minicart Settings</label>
+            <field id="cart_text" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+               <label>Promotional Text</label>
+            </field>
+			<field id="upsell_title" translate="label" type="text" sortOrder="2" showInDefault="1" showInWebsite="0" showInStore="0">
+               <label>Upsell Title</label>
+            </field>
+			<field id="upsell_type" translate="label" sortOrder="3" type="select" showInDefault="1" showInWebsite="0" showInStore="0">
+               <label>Upsell type</label>
+               <!-- source model which we created for drop down options -->
+               <source_model>Magelearn\AdvanceCart\Model\Config\Source\Upselltype</source_model>
+			   <comment>Option Dynamic will show the products from the list of upsell products of the products added to cart. Option Static shows the products from the Sku entered in option 'Product Sku'.</comment>
+            </field>
+            <field id="upsell_limit" translate="label" sortOrder="4" type="select" showInDefault="1" showInWebsite="0" showInStore="0">
+               <label>Upsell Product Limit</label>
+               <!-- source model which we created for drop down options -->
+               <source_model>Magelearn\AdvanceCart\Model\Config\Source\Upselllimit</source_model>
+			   <comment>Set the number for products to show on upsell block.</comment>
+            </field>
+            <field id="upsell_view" translate="label" sortOrder="5" type="select" showInDefault="1" showInWebsite="0" showInStore="0">
+               <label>Upsell View</label>
+               <!-- source model which we created for drop down options -->
+               <source_model>Magelearn\AdvanceCart\Model\Config\Source\Upsellview</source_model>
+			   <comment>Option `Slider` will show the products in a slick slider view. Option `Scroll` shows the products in a scrolling view.</comment>
+            </field>
+            <field id="totals" translate="label" type="select" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Show total summary</label>
+                <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+            </field>
+            <field id="totals_title" translate="label" type="text" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Totals summary text</label>
+                <depends>
+                    <field id="totals">1</field>
+                </depends>
+            </field>
+            <field id="coupon" translate="label" type="select" sortOrder="8" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Allow user to apply coupon</label>
+                <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+            </field>
+			<field id="upsell_sku" translate="label" type="text" sortOrder="9" showInDefault="1" showInWebsite="0" showInStore="0">
+               <label>Product Sku</label>
+			   <depends>
+					<field id="advancecart_setting/minicart_settings/upsell_type">2</field>
+				</depends>
+            </field>
+			
+		</group>
+      </section>
+   </system>
+</config>

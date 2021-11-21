@@ -1,0 +1,117 @@
+<?php
+    $image = 'new_products_content_widget_grid';
+    $collection = $block->getProductCollection();
+	
+    $items = $collection->getItems();
+	
+    $showWishlist = true;
+    $showCompare = true;
+    $showCart = true;
+    $templateType = \Magento\Catalog\Block\Product\ReviewRendererInterface::DEFAULT_VIEW;
+    $description = false;
+?><?php if ($exist = ($collection && $collection->getSize())): ?>
+    <div class="dontForgetWrapper">
+	        <p class="dontForget text-center">
+	            <?php if ($block->getTitle()): ?>
+	                <?= $block->escapeHtml(__($block->getTitle())) ?>
+	            <?php endif ?>
+	        </p>
+	        
+	        <div class="dontForgetCard d-flex">
+	        <div class="block widget block-products-list">
+	        <div class="block-content">
+	            <div class="products-list custom-top-slider">
+	            	<?php foreach ($items as $_item): ?>
+	            		<div class="item">
+	            			<a href="<?= $block->escapeUrl($block->getProductUrl($_item)) ?>" class="product-item-photo dontForgetImg">
+	                            <?= $block->getImage($_item, $image)->toHtml(); ?>
+	                        </a>
+	                        <div class="item-details">
+	                        	<div class="dontForgetInfoWrapper">
+	                                <a title="<?= $block->escapeHtml($_item->getName()) ?>"
+	                                   href="<?= $block->escapeUrl($block->getProductUrl($_item)) ?>"
+	                                   class="product-item-link">
+	                                <?php
+	                                   $product_title = $_item->getName();
+	                                   $product_type = $_item->getTypeId();
+	                                   $product_description = $_item->getShortDescription();
+									?>
+	                                <?php if ($product_title): ?>
+	                                    <p class="productName"><?= /* @noEscape */ $product_title; ?></p>
+	                                <?php endif; ?>
+	                                </a>
+	                                <?php if ($product_type): ?>
+	                                    <p class="productCategory"><?= /* @noEscape */ $product_type; ?></p>
+	                                <?php endif; ?>
+	                                <?php if ($product_description): ?>
+	                                    <p class="productMisc"><?= /* @noEscape */ $product_description; ?></p>
+	                                <?php endif; ?>
+	                            </div>
+	                            <?php
+	                            if ($showWishlist || $showCompare || $showCart): ?>
+	                                <div class="product-item-actions productAddWrapper">
+	                                    <?php if ($showCart): ?>
+	                                        <div class="actions-primary addProduct d-flex">
+	                                            <?php if ($_item->isSaleable()): ?>
+	<form data-role="minicart-form" class="minicartForm" 
+	action="<?= /* @noEscape */ $block->getAddToCartUrl($_item);?>" method="post">
+	<input type="hidden" name="form_key" value="<?= /* @noEscape */ $block->getFormKey() ?>" />
+	<p class="addProduct d-flex">ADD 
+	<button class="addBtn action tocart primary upsellbutton"  type="submit">
+	<span><?= $block->escapeHtml(__('+')) ?></span>
+	</button>
+	</p>
+	</form>
+	
+	                                            <?php endif; ?>
+	                                        </div>
+	                                        
+	                                    <?php endif;
+	                                        $formattedPrice = $block->getFormattedCurrency($_item->getPrice()); ?>
+	                                    <div class="upsell_price"><?= /* @noEscape */ $formattedPrice; ?></div>
+	                                </div>
+	                            <?php endif; ?>
+	                        </div>
+	                    </div>
+	            	<?php endforeach ?>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+</div>
+<?php endif;?>
+<script>
+ require(["jquery","slick"],function($,slick){
+     $(document).ready(function(){
+     	$('.custom-top-slider').slick({
+            slidesToShow: 3,
+            slidesToScroll: 1,
+            dots: true,
+            arrows: true,
+            centerMode: true,
+            centerPadding: 0,
+            focusOnSelect: true,
+            responsive: [
+                {
+                    breakpoint: 767,
+                    settings: {
+                        slidesToShow: 3,
+                    }
+                },
+                {
+                    breakpoint: 560,
+                    settings: {
+                        slidesToShow: 3,
+                    }
+                },
+                {
+                    breakpoint: 480,
+                    settings: {
+                        slidesToShow: 2,
+                    }
+                }
+            ]
+        });
+     })
+ })
+</script>
